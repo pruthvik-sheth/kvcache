@@ -1,0 +1,9 @@
+bazel-bin
+bazel-out
+bazel-testlogs
+bazel-kvcache
+MODULE.bazel.lock
+.DS_Store
+.idea/
+*.iml
+*.class

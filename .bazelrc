@@ -1,0 +1,31 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Java 21 toolchain
+# ──────────────────────────────────────────────────────────────────────────────
+build --java_language_version=21
+build --java_runtime_version=remotejdk_21
+build --tool_java_language_version=21
+build --tool_java_runtime_version=remotejdk_21
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Bzlmod (default in Bazel 7, explicit for clarity)
+# ──────────────────────────────────────────────────────────────────────────────
+build --enable_bzlmod
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Build output
+# ──────────────────────────────────────────────────────────────────────────────
+build --show_progress_rate_limit=5
+build --verbose_failures
+build --worker_verbose
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Test settings
+# ──────────────────────────────────────────────────────────────────────────────
+test --test_output=errors
+test --java_language_version=21
+test --java_runtime_version=remotejdk_21
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Optional: remote cache (uncomment and fill in when available)
+# ──────────────────────────────────────────────────────────────────────────────
+# build --remote_cache=grpcs://your-cache-endpoint
