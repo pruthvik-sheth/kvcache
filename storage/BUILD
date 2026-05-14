@@ -4,7 +4,11 @@ load("@rules_java//java:defs.bzl", "java_library", "java_test")
 
 java_library(
     name = "storage",
-    srcs = glob(["src/**/*.java"], allow_empty = True),
+    srcs = glob(["src/**/*.java"]),
+    deps = [
+        "//core",
+        "//wal",
+    ],
     exports = [
         "//core",
         "//wal",
