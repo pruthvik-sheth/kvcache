@@ -178,13 +178,15 @@ public final class WALWriter implements WAL {
             activeSegment.write(ByteBuffer.wrap(entry));
             activeSegment.updateLastSequence(seq);
 
-            // Rotate when the segment has reached the size limit.
             if (activeSegment.getSizeBytes() >= config.segmentSizeBytes()) {
+                // Rotate when the segment has reached the size limit.
+                // WALSegment.seal() fsyncs before closing, so the entry that
+                // filled the segment is durable when rotation returns, even
+                // with syncIntervalMs == 0. activeSegment is null afterwards,
+                // so it must not be dereferenced again.
                 rotateSegment(seq);
-            }
-
-            // If sync-every-write is configured, fsync inline.
-            if (config.syncIntervalMs() == 0) {
+            } else if (config.syncIntervalMs() == 0) {
+                // If sync-every-write is configured, fsync inline.
                 activeSegment.force();
             }
 
